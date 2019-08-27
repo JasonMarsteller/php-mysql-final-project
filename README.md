@@ -283,3 +283,16 @@ if(isset($_POST['searchnnation'])) {
     }
 }
 ```
+### db.php
+
+This setup also requires a database connection file.  I have deleted mine for security purposes.  However, this is the code that was used that has been sanitized for use.
+
+```
+<?php
+
+$connection = mysqli_connect('ServerLocation', 'Username', 'Password', 'DatabaseName');
+	if(!$connection) {
+		die("Database connected failed.");
+	}
+?>
+```
