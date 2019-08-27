@@ -2,7 +2,7 @@
 
 ## PHP and MySQL Final Project for Southwest Tech Web Development Program
 
-This is my final project for my Southwest Tech PHP and MySQL class.  It is a PHP-built form/spreadsheet for viewing, sorting, searching and inserting Swimming World Records.  I used information learned both from my textbook "PHP and MySQL Web Development" written by Luke Welling and Laura Thompson.  I also used information learned from the the excellent Udemy "PHP for Beginners - Become a PHP Master - CMS Project" taught by Edwin Diaz. I also used the Country-Region Dropdown Menu (Free) JS plugin as provided by the GeoDataSource website. Additionally, I used the sorttable.js plugin to make sorting simpler. 
+This is my final project for my [Southwest Tech Web Development Specialist](https://stech.edu/programs/computer-science/web-development-specialist/) PHP and MySQL class.  It is a PHP-built form/spreadsheet for viewing, sorting, searching and inserting Swimming World Records.  I used information learned both from my textbook "PHP and MySQL Web Development" written by Luke Welling and Laura Thompson.  I also used information learned from the the excellent Udemy "PHP for Beginners - Become a PHP Master - CMS Project" taught by Edwin Diaz. I also used the Country-Region Dropdown Menu (Free) JS plugin as provided by the GeoDataSource website. Additionally, I used the sorttable.js plugin to make sorting simpler. 
 
 ### Credited Links:
 
