@@ -22,6 +22,8 @@ This is the first project I have created using a separate functions.php file.  I
 
 The updateRecords() function was the one I spent the most time on.  I learned a lot from this process, including engaging the StackOverflow community at times. An earlier version of the function required the user to know and pick the proper RecordID so that the function would overwrite the correct item in the data base.  Knowing that this database would only require 42 total entries, I wanted to make it easier to select by Gender and Event to be able to overwrite the correct RecordID.  As you can see below, there is a massive if else if setup that I updated on StackOverflow. [How to Associate and Insert Multiple Predetermined MySQL Fields to Single Select Dropdown Option](https://stackoverflow.com/questions/57190337/how-to-associate-and-insert-multiple-predetermined-mysql-fields-to-single-select).  Additionally, I have another if statement that autofills the VideoURL with a fun video link of the user does not enter a video link during the update process. 
 
+![Update Records](https://user-images.githubusercontent.com/14150576/63813941-5e36d680-c8ec-11e9-91fa-70dd136bee57.png)
+
 ```
 function updateRecords() {
 	if(isset($_POST['submit'])) {
@@ -206,6 +208,8 @@ function updateRecords() {
 
 showRecords() took a surprisingly long time to figure out how to properly concatenate the MySQL query into an HTML table.  Understanding how to make one of the cells an a href link within the while loop required a lot of research on how exactly where to put the ' and " characters to make everything work.  Additionally, researching how to add a class value to the entire table, which required " " around the entire echo with a ' ' around the class took awhile to figure out as typically a class requires " " around it in HTML. 
 
+![Show Records](https://user-images.githubusercontent.com/14150576/63813976-90483880-c8ec-11e9-98aa-a9693d9a2712.png)
+
 ```
 function showRecords() {
 	global $connection;
@@ -228,7 +232,11 @@ function showRecords() {
 
 ### Search Functions
 
-Upon initial submission, my professors requested a search bar be added to the project.  I used the follow codes to create a Search by Swimmer and Search by Nation search bar as part of the top navbar. Note the requirement to use the mysqli_real_scape_string on the search content to prohibit an SQL Injection attempt. 
+Upon initial submission, my professors requested a search bar be added to the project.  I used the follow codes to create a Search by Swimmer and Search by Nation search bar as part of the top navbar. Note the requirement to use the mysqli_real_scape_string on the search content to prohibit an SQL Injection attempt.
+
+![Search Swimmer](https://user-images.githubusercontent.com/14150576/63814027-c71e4e80-c8ec-11e9-9ea0-b1dfdfe7b36c.png)
+
+![Search Nation](https://user-images.githubusercontent.com/14150576/63814006-ab1aad00-c8ec-11e9-82e2-95277d94a7e8.png)
 
 ```
 function searchSwimmer() {
