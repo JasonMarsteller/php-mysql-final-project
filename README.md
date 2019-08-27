@@ -1,10 +1,10 @@
 # Synopsis
 
-**PHP and MySQL Final Project for Southwest Tech Web Development Program
+## PHP and MySQL Final Project for Southwest Tech Web Development Program
 
 This is my final project for my Southwest Tech PHP and MySQL class.  It is a PHP-built form/spreadsheet for viewing, sorting, searching and inserting Swimming World Records.  I used information learned both from my textbook "PHP and MySQL Web Development" written by Luke Welling and Laura Thompson.  I also used information learned from the the excellent Udemy "PHP for Beginners - Become a PHP Master - CMS Project" taught by Edwin Diaz. I also used the Country-Region Dropdown Menu (Free) JS plugin as provided by the GeoDataSource website. Additionally, I used the sorttable.js plugin to make sorting simpler. 
 
-***Credited Links:
+### Credited Links:
 
 [PHP and MySQL Web Development](http://www.informit.com/store/php-and-mysql-web-development-9780321833891),
 
@@ -14,11 +14,11 @@ This is my final project for my Southwest Tech PHP and MySQL class.  It is a PHP
 
 [sorttable: Make all your tables sortable](https://kryogenix.org/code/browser/sorttable/),
 
-###Functions
+### Functions
 
 This is the first project I have created using a separate functions.php file.  I had previously only used functions within javascript tags found either within a js file or within HTML specifically.  I found the process of keeping all of the functions in one place freeing.  Originally, I hated the concent of refactoring and keeping things in separate places.  But, having worked on this project for several hours, it was amazing how much simpler it was once I understood the entire point of having a separate functions file and calling the function wherever I wanted to use it. 
 
-###updateRecords()
+### updateRecords()
 
 The updateRecords() function was the one I spent the most time on.  I learned a lot from this process, including engaging the StackOverflow community at times. An earlier version of the function required the user to know and pick the proper RecordID so that the function would overwrite the correct item in the data base.  Knowing that this database would only require 42 total entries, I wanted to make it easier to select by Gender and Event to be able to overwrite the correct RecordID.  As you can see below, there is a massive if else if setup that I updated on StackOverflow. [How to Associate and Insert Multiple Predetermined MySQL Fields to Single Select Dropdown Option](https://stackoverflow.com/questions/57190337/how-to-associate-and-insert-multiple-predetermined-mysql-fields-to-single-select).  Additionally, I have another if statement that autofills the VideoURL with a fun video link of the user does not enter a video link during the update process. 
 
@@ -199,5 +199,79 @@ function updateRecords() {
 				echo "Record updated!";
 			}
 	}
+}
+```
+
+### showRecords()
+
+showRecords() took a surprisingly long time to figure out how to properly concatenate the MySQL query into an HTML table.  Understanding how to make one of the cells an a href link within the while loop required a lot of research on how exactly where to put the ' and " characters to make everything work.  Additionally, researching how to add a class value to the entire table, which required " " around the entire echo with a ' ' around the class took awhile to figure out as typically a class requires " " around it in HTML. 
+
+```
+function showRecords() {
+	global $connection;
+	$query = "SELECT RecordID, Gender, EventName, Time, SwimmerName, NationName, Date, MeetName, MeetLocation, VideoURL FROM records";
+	$result = mysqli_query($connection, $query);
+
+		if ($result->num_rows > 0) {
+			echo "<table class='sortable'><tr><th>Gender</th><th>Event</th><th>Time</th><th>Swimmer</th><th>Nation</th><th>Date</th><th>Meet</th><th>Location</th><th>Video</th></tr>";
+		    // output data of each row
+		    while($row = $result->fetch_assoc()) {
+		    	$o = '<tr><td>' . $row["Gender"]. '</td><td>' . " " . $row["EventName"]. '</td><td>' . " " . $row["Time"]. '</td><td>' . " " . $row["SwimmerName"]. '</td><td>' . " " . $row["NationName"]. '</td><td>' . " " . $row["Date"]. '</td><td>' . " " . $row["MeetName"]. '</td><td>' . " " . $row["MeetLocation"]. '</td><td><a href="'.$row["VideoURL"].'"target="_blank">'."Video".'</a></td></tr>';
+		        echo $o;
+		    }
+		    echo "</table>";
+		} 	else {
+		    echo "0 results";
+			}
+}
+```
+
+### Search Functions
+
+Upon initial submission, my professors requested a search bar be added to the project.  I used the follow codes to create a Search by Swimmer and Search by Nation search bar as part of the top navbar. Note the requirement to use the mysqli_real_scape_string on the search content to prohibit an SQL Injection attempt. 
+
+```
+function searchSwimmer() {
+    if(isset($_POST['searchswimmer'])) {
+	global $connection;
+        $ssearch = $_POST['swimmer'];
+	$ssearch = mysqli_real_escape_string($connection, $ssearch);
+	$query = "SELECT RecordID, Gender, EventName, Time, SwimmerName, NationName, Date, MeetName, MeetLocation, VideoURL FROM records WHERE SwimmerName LIKE '%$ssearch%'";
+	$result = mysqli_query($connection, $query);
+
+		if ($result->num_rows > 0) {
+		    echo "<table class='sortable'><tr><th>Gender</th><th>Event</th><th>Time</th><th>Swimmer</th><th>Nation</th><th>Date</th><th>Meet</th><th>Location</th><th>Video</th></tr>";
+		    // output data of each row
+		    while($row = $result->fetch_assoc()) {
+		    	$o = '<tr><td>' . $row["Gender"]. '</td><td>' . " " . $row["EventName"]. '</td><td>' . " " . $row["Time"]. '</td><td>' . " " . $row["SwimmerName"]. '</td><td>' . " " . $row["NationName"]. '</td><td>' . " " . $row["Date"]. '</td><td>' . " " . $row["MeetName"]. '</td><td>' . " " . $row["MeetLocation"]. '</td><td><a href="'.$row["VideoURL"].'"target="_blank">'."Video".'</a></td></tr>';
+		        echo $o;
+		    }
+		    echo "</table>";
+		} 	else {
+		    echo "0 results";
+			}
+    }
+}
+
+function searchNation() {
+if(isset($_POST['searchnnation'])) {
+	global $connection;
+        $ssearch = $_POST['nation'];
+	$ssearch = mysqli_real_escape_string($connection, $ssearch);
+	$query = "SELECT RecordID, Gender, EventName, Time, SwimmerName, NationName, Date, MeetName, MeetLocation, VideoURL FROM records WHERE NationName LIKE '%$ssearch%'";
+	$result = mysqli_query($connection, $query);
+
+		if ($result->num_rows > 0) {
+		    echo "<table class='sortable'><tr><th>Gender</th><th>Event</th><th>Time</th><th>Swimmer</th><th>Nation</th><th>Date</th><th>Meet</th><th>Location</th><th>Video</th></tr>";
+		    // output data of each row
+		    while($row = $result->fetch_assoc()) {
+		    	$o = '<tr><td>' . $row["Gender"]. '</td><td>' . " " . $row["EventName"]. '</td><td>' . " " . $row["Time"]. '</td><td>' . " " . $row["SwimmerName"]. '</td><td>' . " " . $row["NationName"]. '</td><td>' . " " . $row["Date"]. '</td><td>' . " " . $row["MeetName"]. '</td><td>' . " " . $row["MeetLocation"]. '</td><td><a href="'.$row["VideoURL"].'"target="_blank">'."Video".'</a></td></tr>';
+		        echo $o;
+		    }
+		    echo "</table>";
+		} 	else {
+		    echo "0 results";
+			}
+    }
 }
 ```
